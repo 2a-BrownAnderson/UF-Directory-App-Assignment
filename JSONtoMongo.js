@@ -11,7 +11,9 @@ var fs = require('fs'),
     listingData = require('./listings.json');
 
 /* Connect to your database */
-mongoose.connect(config.db.uri);
+mongoose.connect(config.db.uri, function (err, db) {
+  if (err) throw err;
+});
 
 /* 
   Instantiate a mongoose model for each listing object in the JSON file, 
