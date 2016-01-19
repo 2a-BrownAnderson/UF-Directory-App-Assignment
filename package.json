@@ -9,7 +9,8 @@
   "author": "Medhir Bhargava",
   "license": "MIT",
   "dependencies": {
-    "mongoose": "^4.2.9"
+    "mocha": "^2.3.4",
+    "mongoose": "^4.3.6"
   },
   "devDependencies": {
     "should": "^7.1.1"
