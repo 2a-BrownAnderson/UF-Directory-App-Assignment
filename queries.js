@@ -16,7 +16,8 @@ mongoose.connect(config.db.uri, function (err, db) {
      */
      Listing.find({ code: 'LBW'}, function (err, listing) {
         if (err) throw err;
-        console.log(JSON.stringify(listing));
+        console.log('\nExecuting findLibraryWest()......\n');
+        console.log(listing);
      });
   };
   var removeCable = function() {
@@ -25,14 +26,19 @@ mongoose.connect(config.db.uri, function (err, db) {
       on cable TV. Since we live in the 21st century and most courses are now web based, go ahead
       and remove this listing from your database and log the document to the console. 
      */
-     Listing.find({ code: 'CABL' }, function (err, entry) {
-        if (err) throw err;
-        //console.log('Removing:');
-        //console.log(entry);
-        
-        entry.remove(function(err) {
-          if (err) throw err;
-        });
+     Listing.findOne({ code: 'CABL' }, function (err, listing) {
+        if (err) throw err;     
+        console.log('\nExecuting removeCable()........\n');
+        if (listing) {
+          console.log('Removing:');
+          console.log(listing);
+          listing.remove(function(err) {
+            if (err) throw err;
+          });
+        }
+        else {
+          console.log('CABL not found for removal.');
+        }
      });
   };
   var updatePhelpsMemorial = function() {
@@ -40,11 +46,31 @@ mongoose.connect(config.db.uri, function (err, db) {
       Phelps Memorial Hospital Center's address is incorrect. Find the listing, update it, and then 
       log the updated document to the console. 
      */
+     Listing.findOne({code: 'PHL'}, function (err, listing) {
+      if (err) throw err;
+      console.log('\nExecuting updatePhelpsMemorial().......\n');
+      if (listing) {
+        listing.address = '100 Phelps Lab, P.O. Box 116350, Gainesville, FL  32611';
+        listing.save();
+        console.log(listing);
+      }
+      else {
+        console.log('Phelps not found.');
+      }
+
+     });
+
+
   };
   var retrieveAllListings = function() {
     /* 
       Retrieve all listings in the database, and log them to the console. 
      */
+     Listing.find({}, function (err, listings) {
+      if (err) throw err;
+      console.log('\nExecuting retrieveAllListings().......\n');
+      console.log(listings);
+     });
   };
 
   findLibraryWest();
